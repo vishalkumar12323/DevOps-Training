@@ -32,3 +32,13 @@ docker image rm <image-id>, or <image-name:tag>
 ```bash
 docker system prune -a
 ```
+
+### Check all available volumes
+```bash
+docker volume ls
+```
+
+### Check all available networks
+```bash
+docker network ls
+```
