@@ -27,3 +27,8 @@ docker rm <container-id>, or <container-name>
 ```bash
 docker image rm <image-id>, or <image-name:tag>
 ```
+
+### Remove all docker images and containers
+```bash
+docker system prune -a
+```
