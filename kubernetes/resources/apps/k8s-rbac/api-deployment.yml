@@ -2,14 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blogzine-api
+  namespace: rbac-demo
 spec:
   selector:
     matchLabels:
-      app: blogzine-api
+      app.kubernetes.io/name: blogzine-api
   template:
     metadata:
       labels:
-        app: blogzine-api
+        app.kubernetes.io/name: blogzine-api
     spec:
       containers:
       - name: blogzine-api-container

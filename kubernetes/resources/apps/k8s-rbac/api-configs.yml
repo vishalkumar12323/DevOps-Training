@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: rbac-demo
+data:
+  MONGODB_HOST: mongodb-service
+  MONGODB_PORT: "27017"
+  MONGODB_DATABASE: Blogger
