@@ -15,7 +15,7 @@ spec:
       containers:
       - name: blogzine-api-container
         image: vishaldoc502/blogzine:prod-v2
-        envForm:
+        envFrom:
           - configMapRef:
               name: api-config
           - secretRef:
