@@ -8,6 +8,6 @@ spec:
   selector:
     app.kubernetes.io/name: blogzine-api
   ports:
-  - port: 8080
+  - port: 8443
     targetPort: https
     nodePort: 31000
