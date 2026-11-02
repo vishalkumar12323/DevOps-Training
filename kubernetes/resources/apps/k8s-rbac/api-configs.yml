@@ -7,3 +7,18 @@ data:
   MONGODB_HOST: mongodb-service
   MONGODB_PORT: "27017"
   MONGODB_DATABASE: Blogger
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: kube-rbac-proxy-config
+#   namespace: rbac-demo
+# data:
+#   config-file.yaml: |
+#     authorization:
+#       resourceAttributes:
+#         namespace: rbac-demo
+#         apiVersion: v1
+#         resource: services
+#         subresource: proxy
+#         name: api-service

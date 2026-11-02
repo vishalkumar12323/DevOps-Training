@@ -12,6 +12,11 @@ spec:
       labels:
         app.kubernetes.io/name: blogzine-api
     spec:
+      # serviceAccountName: api-kube-rbac-proxy
+      # volumes:
+      #   - name: kube-rbac-proxy-config
+      #     configMap:
+      #       name: kube-rbac-proxy-config
       containers:
       - name: blogzine-api-container
         image: vishaldoc502/blogzine:prod-v2
@@ -41,12 +46,16 @@ spec:
         args:
           - "--secure-listen-address=0.0.0.0:8443"
           - "--upstream=http://127.0.0.1:8080/"
-          - "--config-file=/etc/kube-rbac-proxy/config-file.yaml"
+          # - "--config-file=/etc/kube-rbac-proxy/config-file.yaml"
           - "--logtostderr=true"
           - "--v=10"
         ports:
           - containerPort: 8443
             name: https
+        # volumeMounts:
+        #   - name: kube-rbac-proxy-config
+        #     mountPath: /etc/kube-rbac-proxy
+        #     readOnly: true
         resources:
           requests:
             memory: "100Mi"
