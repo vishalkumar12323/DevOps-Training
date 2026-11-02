@@ -12,11 +12,11 @@ spec:
       labels:
         app.kubernetes.io/name: blogzine-api
     spec:
-      # serviceAccountName: api-kube-rbac-proxy
-      # volumes:
-      #   - name: kube-rbac-proxy-config
-      #     configMap:
-      #       name: kube-rbac-proxy-config
+      serviceAccountName: api-kube-rbac-proxy
+      volumes:
+        - name: kube-rbac-proxy-config
+          configMap:
+            name: kube-rbac-proxy-config
       containers:
       - name: blogzine-api-container
         image: vishaldoc502/blogzine:prod-v2
