@@ -8,7 +8,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: blogzine-api-proxy-binding
-subject:
+subjects:
   - kind: ServiceAccount
     name: blogzine-api-proxy
     namespace: rbac-demo
