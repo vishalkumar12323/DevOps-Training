@@ -10,4 +10,4 @@ spec:
   ports:
   - port: 8443
     targetPort: https
-    nodePort: 30090
+    nodePort: 31000
