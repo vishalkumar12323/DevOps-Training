@@ -12,6 +12,7 @@ spec:
       labels:
         app.kubernetes.io/name: blogzine-api
     spec:
+      serviceAccountName: blogzine-api-proxy
       containers:
       - name: blogzine-api-container
         image: vishaldoc502/blogzine:prod-v2
