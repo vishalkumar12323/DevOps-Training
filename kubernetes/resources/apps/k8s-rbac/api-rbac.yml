@@ -5,6 +5,14 @@ metadata:
   namespace: rbac-demo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: blogzine-sa-role
+rules:
+- nonResourceURLs: ["/*"]
+  verbs: ["get", "post", "put", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: blogzine-role-binding
@@ -14,5 +22,5 @@ subjects:
     namespace: rbac-demo
 roleRef:
   kind: ClusterRole
-  name: cluster-admin
+  name: blogzine-sa-role
   apiGroup: rbac.authorization.k8s.io
