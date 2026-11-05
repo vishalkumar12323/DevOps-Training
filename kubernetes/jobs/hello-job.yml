@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-      - name: hello
+      - name: hello-job
         image: busybox:1.36
-        command: ["sh",  "-c", "echo 'Hello from Kubernetes Jobs!'"]
+        command: ["sh",  "-c", "echo 'Hello From Kubernetes Jobs!"]
       restartPolicy: Never
