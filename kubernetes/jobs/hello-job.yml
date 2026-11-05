@@ -3,11 +3,12 @@ kind: Job
 metadata:
   name: hello-job
 spec:
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 0
   template:
     spec:
       containers:
       - name: hello-job
         image: busybox:1.36
-        command: ["sh",  "-c", "echo 'Hello From Kubernetes Jobs!"]
+        command: ['sh', '-c', 'echo "Hello $(whoami)"']
       restartPolicy: Never
+  backoffLimit: 2
