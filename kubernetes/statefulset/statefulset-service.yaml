@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-headless
+  namespace: ss-lab
+spec:
+  selector:
+    app: nginx
+  clusterIP: None
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
