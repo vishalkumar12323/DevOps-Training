@@ -77,7 +77,7 @@
     kind: Service
     metadata:
         name: postgres-headless-service
-        namespace: default
+        namespace: statefulset-lab
     spec:
         ClusterIP: none
         selector:
@@ -94,3 +94,48 @@
 
     postgres-2.postgres-headless.default.svc.cluster.local
     ```
+
+## StatefulSet Example
+```bash
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx
+  namespace: statefulset-lab
+spec:
+  serviceName: nginx-headless
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+              name: web
+
+          volumeMounts:
+            - name: nginx-data
+              mountPath: /usr/share/nginx/html/data
+
+  volumeClaimTemplates:
+    - metadata:
+        name: nginx-data
+
+      spec:
+        accessModes:
+          - ReadWriteOnce
+
+        resources:
+          requests:
+            storage: 256Mi
+```
