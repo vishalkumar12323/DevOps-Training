@@ -12,7 +12,7 @@ spec:
 
   persistentVolumeClaimRetentionPolicy:
     whenDeleted: Retain
-    whenScaled: Retain
+    whenScaled: Delete
 
   template:
     metadata:
