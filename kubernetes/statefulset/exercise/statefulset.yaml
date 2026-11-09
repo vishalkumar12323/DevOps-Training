@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+  namespace: ss-challenge
+spec:
+  selector:
+    matchLabels:
+      app: web
+  serviceName: web-headless
+  replicas: 3
+
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - name: web-data
+          mountPath: /usr/share/nginx/html/data
+  volumeClaimTemplates:
+  - metadata:
+      name: web-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 256Mi
