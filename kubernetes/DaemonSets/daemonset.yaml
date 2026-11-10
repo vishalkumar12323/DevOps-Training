@@ -3,27 +3,23 @@ kind: DaemonSet
 metadata:
   name: node-agent
   namespace: daemonset-demo
-
 spec:
   selector:
     matchLabels:
       app: node-agent
-  
   template:
     metadata:
       labels:
         app: node-agent
-
     spec:
       containers:
-        - name: agent 
+        - name: agent
           image: busybox:1.36
           command:
             - sh
-            - c 
+            - -c
             - |
               while true; do
-                echo "Node agnet running!"
+                echo "Node agent is running..."
                 sleep 30
               done
-                
