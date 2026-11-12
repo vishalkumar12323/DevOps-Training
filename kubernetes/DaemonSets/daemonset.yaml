@@ -12,6 +12,8 @@ spec:
       labels:
         app: node-agent
     spec:
+      nodeSelector:
+        environment: production
       containers:
         - name: agent
           image: busybox:1.36
