@@ -29,3 +29,28 @@ This is one of the most important concepts to understand.
 | Scaling | Set replica count | Follows eligible node count |
 | New node joins | No automatic extra replica | Automatically creates a Pod |
 | Typical use | APIs, frontend, workers | Logging, monitoring, networking |
+
+## Create and apply daemonset manifest
+```bash
+touch daemonset.yaml
+kubectl apply -f daemonset.yaml
+```
+
+### Check Status
+```bash
+kubectl get daemonset -n daemonset-demo
+
+kubectl describe daemonset node-agent -n daemonset-demo
+
+# Inspect logs
+kubectl logs -n daemonset-demo -l app=node-agent
+```
+
+### Test for automatic pod creation
+```bash
+# Delete the Pod menually
+kubectl delete pod -n daemonset-demo -l app=node-agent
+
+# Watch Pod
+kubectl get pod -n daemonset-demo -w
+```
