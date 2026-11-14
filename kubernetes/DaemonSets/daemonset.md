@@ -54,3 +54,51 @@ kubectl delete pod -n daemonset-demo -l app=node-agent
 # Watch Pod
 kubectl get pod -n daemonset-demo -w
 ```
+---
+
+## Advance Daemonsets
+- Node labels
+- Node selector
+- Taints and tolerations
+--- 
+
+### Node Lables
+`kubernetes nodes have labels that describe their characteristics`
+
+For Example
+```bash
+Node            Labels
+
+node-1          environment=production
+node-2          environment=development
+node-3          environment=production
+```
+A workload can use these labels to target specific nodes.
+
+Check nodes labels
+```bash
+kubeclt get nodes --show-labels
+```
+Add a custom label
+```bash
+kubectl label nodes <node-name> environment=production
+```
+---
+Node Selectors
+
+A `nodeSelector` tells Kubernetes that a Pod must be scheduled only on nodes containing the specified labels.
+
+`nodeSelector` added under `spec.template.spec`
+```bash
+spec:
+    template:
+        spec:
+            nodeSelector:
+                environment: production
+            containers:
+                .....
+                .....
+```
+---
+### Taints and tolerations
+- Node labels attract workloads; taints repel workloads unless they tolerate the taint.
