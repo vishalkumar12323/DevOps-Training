@@ -4,7 +4,7 @@ metadata:
   name: nginx-scheduled
   namespace: sch-demo
   labels:
-    app.kubernetes.io/name: nginx-scheduled
+    app: nginx-scheduledv1
 spec:
   nodeSelector:
     environment: production
@@ -15,5 +15,8 @@ spec:
       requests:
         cpu: "100m"
         memory: "128Mi"
+      limits:
+        cpu: "200m"
+        memory: "264Mi"
     ports:
       - containerPort: 80
