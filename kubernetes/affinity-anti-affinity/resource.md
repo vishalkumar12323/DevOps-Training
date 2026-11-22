@@ -1,4 +1,4 @@
-# Affinity and Anti Affinity
+# Affinity and Anti-Affinity
 ---
 ## What is Affinity in Kubernetes?
 - ### A scheduling mechanism that allows you to express preferences or requirements about where Kuberenetes should place your Pods.
@@ -61,3 +61,43 @@ affinity:
                       values:
                         - ssd
 ```
+---
+## Pod Affinity
+- ### Pod affinity allows to schedule a pods near others pods that matches specific labels
+
+Examples: Backend pods to run close to database pods.
+```bash
+affinity:
+  podAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app: db
+        topologyKey: kubernetes.io/hostname
+```
+`topologyKey`: It tells Kubernetes the level at which Pods should be considered together.
+
+Examples
+```bash
+  TopologyKey                               Meaning
+kubernetes.io/hostname                    Same Node
+topology.kubernetes.io/zone               Same availability zone
+topology.kubernetes.io/region             Same region
+```
+---
+## Pod Anti-Affinity
+Anti-Affinity is the opposite of Pod Affinity
+- ### It tells Kubernetes to avoid scheduling a Pod in the same topology domain as certain other Pods.
+
+For Example: suppose you have three database replicas.
+You want each replica to run on a different node to improve availability.
+```bash
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app: db
+        topologyKey: kubernetes.io/hostname
+```
+This means: Don't schedule this Pod on a node that already contains a matching app=db Pod.
