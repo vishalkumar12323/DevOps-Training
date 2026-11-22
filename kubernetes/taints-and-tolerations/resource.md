@@ -1,0 +1,65 @@
+# What are Taints and Tolerations?
+- ### Taints and tolerations are Kubernetes scheduling mechanisms that control which Pods can be scheduled onto which Nodes.
+Important: `A toleration does not guarantee that a Pod will be scheduled on a particular Node. It only removes the restriction imposed by a matching taint. Other scheduling rules still apply.`
+
+## Taints Effects
+Kubernetes supports three primary taint effects.
+
+### NoSchedule
+- New Pods that do not tolerate the taint cannot be scheduled on the Node.
+- Existing Pods are not automatically evicted.
+
+### PreferNoSchedule
+- Kubernetes tries to avoid scheduling Pods on the tainted Node.
+- It may still schedule them there if other suitable Nodes are unavailable.
+
+### NoExecute
+- New Pods without matching tolerations cannot be scheduled.
+- Existing Pods without matching tolerations can be evicted.
+- Pods with a toleration can remain for a specified duration using tolerationSeconds.
+---
+
+### How taints and tolerations work together
+Considor the node
+```bash
+Node: minikube
+
+Taint:
+dedicated=backend:NoSchedule
+```
+
+Now considor two Pods
+Pod A without toleration
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+```
+
+Pod B with toleration
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-pod
+spec:
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "backend"
+      effect: "NoSchedule"
+  containers:
+    - name: nginx
+      image: nginx
+```
+---
+Toleration operators
+| Operator | Meaning | 
+| --- | --- | 
+| Equal | Both key and value must match |
+| Exists | Only the key must match; value is ignored |
