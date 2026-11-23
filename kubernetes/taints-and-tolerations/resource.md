@@ -63,3 +63,14 @@ Toleration operators
 | --- | --- | 
 | Equal | Both key and value must match |
 | Exists | Only the key must match; value is ignored |
+---
+
+### Check existing taints
+```bash
+kubectl describe node <node-name>
+```
+Check the Taints section
+
+### Apply a taint
+```bash
+kubectl taint nodes minikube dedicated=backend:NoSchedule
