@@ -74,3 +74,49 @@ Check the Taints section
 ### Apply a taint
 ```bash
 kubectl taint nodes minikube dedicated=backend:NoSchedule
+```
+
+### Remove the taint
+```bash
+kubectl taint nodes minikube dedicated:NoSchedule
+```
+---
+## Advanced concepts - NoExecute and tolerationSeconds
+New Pods without matching tolerations cannot be scheduled.
+Existing Pods without matching tolerations can be evicted.
+
+Example
+```bash
+toleration:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+    tolerationSecond: 60
+```
+This means:
+- The Pod tolerates the taint.
+- It can remain on the Node for 60 seconds after the taint is applied.
+- After that period, Kubernetes can evict it if the taint remains.
+---
+
+## Use cases
+1. GPU Nodes
+
+    Dedicated GPU Nodes should run machine-learning workloads rather than ordinary application workloads.
+
+    Taint: gpu=true:NoSchedule
+
+2. Dedicated Database Nodes
+
+    Restrict scheduling to database workloads.
+
+    Taint: dedicated=database:NoSchedule
+
+3. Control Plane Nodes
+
+    Kubernetes commonly uses taints to prevent ordinary application workloads from running on control-plane Nodes.
+
+4. Node Maintenance
+
+    NoExecute can help evict workloads from Nodes that need maintenance.
