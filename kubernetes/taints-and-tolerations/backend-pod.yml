@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-pod
+  labels:
+    app.kubernetes.io/name: backend-pod
+spec:
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "backend"
+      effect: "NoSchedule"
+  containers:
+  - name: nginx
+    image: nginx:latest
+    resources:
+      requests:
+        memory: "100Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
