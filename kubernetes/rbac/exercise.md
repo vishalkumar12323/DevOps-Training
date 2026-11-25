@@ -23,3 +23,55 @@ kubectl create serviceaccount pod-reader -n rbac-demo
 kubectl get serviceaccount -n rbac-demo
 ```
 
+### Create a Role
+`touch pod-reader-role.yaml`
+```bash
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+
+metadata:
+  name: pod-reader-role
+  namespace: rbac-demo
+
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+```
+
+### Apply and Verify
+```bash
+kubectl apply -f pod-reader-role.yml
+
+kubectl get role -n rbac-demo
+
+kubectl describe role pod-reader-role -n rbac-demo
+```
+
+### Create a RoleBinding
+`touch pod-reader-binding.yaml`
+```bash
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+
+metadata:
+  name: pod-reader-binding
+  namespace: rbac-demo
+
+subjects:
+  - kind: ServiceAccount
+    name: pod-reader
+    namespace: rbac-demo
+
+roleRef:
+  kind: Role
+  name: pod-reader-role
+  apiGroup: rbac.authorization.k8s.io
+```
+
+### Apply & Verify
+```bash
+kubectl apply -f pod-reader-binding.yaml
+
+kubectl get rolebinding -n rbac-demo
+```
