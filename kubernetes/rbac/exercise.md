@@ -75,3 +75,26 @@ kubectl apply -f pod-reader-binding.yaml
 
 kubectl get rolebinding -n rbac-demo
 ```
+
+### Test RBAC permission.
+```bash
+kubectl auth can-i # Lets you check whether a particular identity is authorized to perform an operation.
+```
+
+- ### List Pods
+    ```bash
+    kubectl auth can-i list pods -n rbac-demo --as=system:serviceaccount:rbac-demo:pod-reader
+    ```
+    Expected output: yes
+
+- ### Get Pods
+    ```bash
+    kubectl auth can-i get pods -n rbac-demo --as=system:serviceaccount:rbac-demo:pod-reader
+    ```
+    Expected output: yes
+
+- ### Create Pods
+    ```bash
+    kubectl auth can-i create pods -n rbac-demo --as=system:serviceaccount:rbac-demo:pod-reader
+    ```
+    Expected output: no
