@@ -97,3 +97,54 @@ kubeclt exec -it api-client -n sa-demo -- sh
 # &&
 ls -l /var/run/secrets/kubernetes.io/serviceaccount/
 ```
+
+### Check the namespace
+```bash
+cat /var/run/secrets/kubernetes.io/serviceaccount/namespace
+```
+
+### Check token exists without printing its contant
+```bash
+test -s /var/run/secrets/kubernetes.io/serviceaccount/token \
+  && echo "ServiceAccount token is mounted"
+```
+
+### Authenticate with the Kubernetes API
+```bash
+# * inside the container
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+
+curl --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+  -H "Authorization: Bearer $TOKEN" \
+  https://kubernetes.default.svc/api/v1/namespaces/sa-demo/pods
+```
+
+### Disable automatic token mounting
+Create new pod called: frontend-pod.yaml
+```bash
+touch frontend-pod.yaml
+
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: frontend-client
+  namespace: sa-demo
+
+spec:
+  automountServiceAccountToken: false
+
+  containers:
+    - name: frontend
+      image: curlimages/curl:8.12.1
+      command: ["sleep", "3600"]
+```
+
+### Apply, verify and check token
+```bash
+kubectl apply -f frontend-pod.yaml
+
+kubectl exec -it frontend-client -n sa-demo -- sh
+
+ls -la /var/run/secrets/kubernetes.io/serviceaccount/
+```
